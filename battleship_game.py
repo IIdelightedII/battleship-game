@@ -1,7 +1,13 @@
 import random
+from dataclasses import field
+from multiprocessing.synchronize import RLock
+
 from field import Field
 import constants
 from utility import clamp
+from ship import Ship
+import random
+
 
 class BattleshipGame:
     def __init__(self, size: int, ship_types: list):
@@ -11,68 +17,38 @@ class BattleshipGame:
         self.computer_field = Field(self.size, self.ship_types)
 
     # Это функция расстановки кораблей, она уже полностью написана
-    def place_ships_randomly(self, grid):
-
+    def place_ships_randomly(self, field: Field):
+        ship_number = 0
         for ship_len in range(len(self.ship_types)):
 
             # print(f"{self.ships[ship_len] = }")
 
             for _ in range(self.ship_types[ship_len]):
+                ship_number += 1
                 placed = False
                 # print(f"{_ + 1} {ship_len + 1}-палубных кораблей")
                 while not placed:
                     # ship_len += 1
-                    coords, indents = self.generate_ship()
-                    x, y = coords
-                    x_indent, y_indent = indents
-                    #
-                    # print(f"{indents = }")
-                    # print(f"{x = }")
-                    # print(f"{y = }")
-                    # print(f"{x_indent = }")
-                    # print(f"{y_indent = }")
+                    ship = self.generate_ship(ship_len + 1)
 
-                    if not self.is_valid_ship_placement(grid, coords, (x_indent, y_indent), ship_len + 1):
+                    if not self.is_valid_ship_placement(field, ship):
                         continue
+                    field.ships[str(ship_number)] = ship
+                    self.place_buffer_zone(field, ship, constants.BUFFER_ZONE)
 
-                    grid = self.generate_buffer_zone(grid, x, y, x_indent, y_indent, ship_len + 1)
-
-                    # grid[coords[1]][coords[0]] = constants.SHIP
-                    # grid[point1[1]][point1[0]] = constants.DESTROYED_SHIP
-                    # grid[point2[1]][point2[0]] = constants.BUFFER_ZONE
-                    # # for j in range(point1[1], point2[1] + 1):
-                    #     for k in range(point1[0], point2[1]):
-                    grid = self.place_ship(grid, x, y, x_indent, y_indent, ship_len + 1)
+                    self.place_ship(field, ship, ship_number)
 
                     placed = True
-                    # print(f"{ship_len =  }")
-        return grid
-                    # except IndexError:
-                    #     pass
-                # if self.is_valid_ship_placement(grid, coords): # либо сделать условие, либо сделать так, чтобы ошибок быть не могло, кроме столкновений
-                #     grid.grid[coords[0]][coords[1]] = "S"
+
+        return field
+
 
 
     # Это функция проверки расстановки кораблей, она уже полностью написана
-    def is_valid_ship_placement(self, grid: Field, coords: tuple[int, int], direction: tuple[int, int], ship_length: int = 1) -> bool:
-        x, y = coords
-        x_indent, y_indent = direction
-        if not (0 <= x + x_indent * ship_length < self.size and 0 <= y + y_indent * ship_length < self.size):
-            return False
-        for k in range(ship_length):
-            if (grid.grid[y + y_indent * k][x + x_indent * k] == constants.SHIP or
-                grid.grid[y + y_indent * k][x + x_indent * k] == constants.BUFFER_ZONE):
-                return False
-        return True
-        # # Проверка на наличие соседних клеток по горизонтали и вертикали
-        # for i in range(ship_length + 2):
-        #     for j in range(-1, 2):
-        #         for k in range(-1, 2):
-        #             new_x, new_y = x + j, y + k
-        #             if 0 <= new_x < self.size and 0 <= new_y < self.size and field.grid[new_x][new_y] == "S":
-        #                 return False
 
-    def generate_ship(self) -> tuple[tuple[int, int], tuple[int, int]]:
+
+
+    def generate_ship(self, ship_len: int) -> Ship:
         direction = random.choice(["left", "right", "down", "up"])
         x, y = (random.randint(0, self.size - 1), random.randint(0, self.size - 1))
         if direction == "left":
@@ -87,31 +63,114 @@ class BattleshipGame:
         elif direction == "up":
             x_indent = 0
             y_indent = -1
-        return (x, y), (x_indent, y_indent)
+        return Ship(x, y, x_indent, y_indent, ship_len)
 
 
-    def generate_buffer_zone(self, grid:  Field, x: int, y: int, x_indent: int, y_indent: int, ship_len: int) ->  Field:
-        point1 = (clamp(x - 1 * (x_indent + y_indent), 0, self.size - 1),
-                  clamp((y - 1 * (x_indent + y_indent)), 0, self.size - 1))
-        point2 = (clamp((x + x_indent * ship_len + abs(y_indent) * (x_indent + y_indent)), 0, self.size - 1),
-                  clamp((y + y_indent * ship_len + abs(x_indent) * (x_indent + y_indent)), 0, self.size - 1))
+    def is_valid_ship_placement(self, field: Field, ship: Ship) -> bool:
+        if not (0 <= ship.x + ship.x_indent * ship.len < self.size and 0 <= ship.y + ship.y_indent * ship.len < self.size):
+            return False
+        for k in range(ship.len):
+            if (field.grid[ship.y + ship.y_indent * k][ship.x + ship.x_indent * k] == constants.SHIP or
+                field.grid[ship.y + ship.y_indent * k][ship.x + ship.x_indent * k] == constants.BUFFER_ZONE):
+                return False
+        return True
+
+    def place_buffer_zone(self, field:  Field, ship: Ship, symbol: str) -> None:
+
+        point1 = (clamp(ship.x - 1 * (ship.x_indent + ship.y_indent), 0, self.size - 1),
+                  clamp((ship.y - 1 * (ship.x_indent + ship.y_indent)), 0, self.size - 1))
+        point2 = (clamp((ship.x + ship.x_indent * ship.len + abs(ship.y_indent) * (ship.x_indent + ship.y_indent)), 0, self.size - 1),
+                  clamp((ship.y + ship.y_indent * ship.len + abs(ship.x_indent) * (ship.x_indent + ship.y_indent)), 0, self.size - 1))
 
         for x in range(min(point2[0], point1[0]), max(point2[0], point1[0]) + 1):
             for y in range(min(point2[1], point1[1]), max(point2[1], point1[1]) + 1):
-                grid.grid[y][x] = constants.BUFFER_ZONE
+                field.grid[y][x] = symbol
 
-        return grid
 
-    def place_ship(self, grid: Field, x: int, y: int, x_indent: int, y_indent: int, ship_len: int) -> Field:
-        for k in range(ship_len):
-            grid.grid[y + y_indent * k][x + x_indent * k] = constants.SHIP
 
-        return grid
+    def place_ship(self, field: Field, ship: Ship, symbol: str | int) -> None:
+        for k in range(ship.len):
+            field.grid[ship.y + ship.y_indent * k][ship.x + ship.x_indent * k] = str(symbol)
 
 
     def play(self):
-        self.place_ships_randomly(self.player_field, self.ship_types)
-        self.place_ships_randomly(self.computer_field, self.ship_types)
+        self.place_ships_randomly(self.player_field)
+        self.place_ships_randomly(self.computer_field)
+        while True:
+            print("Расстановка кораблей компьютера:")
+            self.computer_field.display()
+            print("Ваша расстановка кораблей:")
+            self.player_field.display()
+            print("ход игрока:")
+            x, y = self.player_input()
+            if not self.player_turn(x, y):
+                continue
+            if self.computer_field.ship_count == 0:
+                print("Все корабли компьютера подбиты, игрок выиграл")
+                break
+            print("Ход компьютера")
+            self.computer_turn()
+            if self.player_field.ship_count == 0:
+                print("Все корабли игрока подбиты, компьютер выиграл")
+                break
         print("Расстановка кораблей компьютера:")
-
+        self.computer_field.display(True)
         print("Ваша расстановка кораблей:")
+        self.player_field.display(True)
+
+    def __turn(self, field: Field, x: int, y: int, user):
+        if field.grid[y][x].isdigit():
+            ship_number = field.grid[y][x]
+            ship = field.ships[ship_number]
+            ship.hp -= 1
+            field.grid[y][x] = constants.DESTROYED_SHIP
+            print(f"{user} попал!, координаты: {x + 1}, {y + 1}")
+            print("-" * 20)
+            if ship.hp == 0:
+                field.ship_count -= 1
+                self.place_buffer_zone(field, ship, constants.EXTRA_BUFFER_ZONE)
+                self.place_ship(field, ship, constants.FULLY_DESTROYED_SHIP)
+            return True, True # return [был ли выстрел], [попал ли в корабль], [координата x], [координата y]
+        elif field.grid[y][x] == constants.EMPTY or field.grid[y][x] == constants.BUFFER_ZONE:
+            field.grid[y][x] = constants.MISS
+            print(f"{user} промахнулся, координаты: {x + 1}, {y + 1}")
+            print("-" * 20)
+            return True, False # return [был ли выстрел], [попал ли в корабль]
+        else:
+            return False, False
+
+    def player_turn(self, x: int, y: int):
+        if not self.__turn(self.computer_field, x, y, "игрок")[0]:
+            print(f"Кажется Вы не туда стреляете, координаты: {x + 1}, {y + 1}")
+            print("-" * 20)
+            return False
+        return True
+
+
+    def computer_turn(self):
+        while True:
+            x = random.randint(0, self.size - 1)
+            y = random.randint(0, self.size - 1)
+            if self.__turn(self.player_field, x, y, "Компьютер")[0]:
+                break
+
+
+
+
+    def player_input(self) -> tuple:
+        while True:
+            try:
+                x = int(input("x = ")) - 1
+                y = int(input("y = ")) - 1
+
+                if 0 <= x < self.size and 0 <= y < self.size:
+                    return x, y
+                else:
+                     print(f"Число, которое вы вводите должно быть в границах поля, т.е. между 1 и {self.size}")
+
+            except ValueError:
+                print("Вы должны ввести Числа и при этом они должны быть целым")
+
+
+    # todo целое, границы. Возвращение x, y - кортеж
+
