@@ -97,10 +97,10 @@ class BattleshipGame:
         self.place_ships_randomly(self.player_field)
         self.place_ships_randomly(self.computer_field)
         while True:
-            print("Расстановка кораблей компьютера:")
-            self.computer_field.display()
             print("Ваша расстановка кораблей:")
             self.player_field.display()
+            print("Расстановка кораблей компьютера:")
+            self.computer_field.display()
             print("ход игрока:")
             x, y = self.player_input()
             if not self.player_turn(x, y):
@@ -113,10 +113,10 @@ class BattleshipGame:
             if self.player_field.ship_count == 0:
                 print("Все корабли игрока подбиты, компьютер выиграл")
                 break
-        print("Расстановка кораблей компьютера:")
-        self.computer_field.display(True)
         print("Ваша расстановка кораблей:")
         self.player_field.display(True)
+        print("Расстановка кораблей компьютера:")
+        self.computer_field.display(True)
 
     def __turn(self, field: Field, x: int, y: int, user):
         if field.grid[y][x].isdigit():
@@ -129,6 +129,7 @@ class BattleshipGame:
             if ship.hp == 0:
                 field.ship_count -= 1
                 self.place_buffer_zone(field, ship, constants.EXTRA_BUFFER_ZONE)
+
                 self.place_ship(field, ship, constants.FULLY_DESTROYED_SHIP)
             return True, True # return [был ли выстрел], [попал ли в корабль], [координата x], [координата y]
         elif field.grid[y][x] == constants.EMPTY or field.grid[y][x] == constants.BUFFER_ZONE:
@@ -171,6 +172,4 @@ class BattleshipGame:
             except ValueError:
                 print("Вы должны ввести Числа и при этом они должны быть целым")
 
-
-    # todo целое, границы. Возвращение x, y - кортеж
 

@@ -6,7 +6,7 @@ import constants
 from ship import Ship
 import random
 
-game = BattleshipGame(5, ([0, 0, 0, 1]))
+game = BattleshipGame(7, ([3, 2, 1]))
 ship = Ship(5, 5, 1, 0, 1)
 # grid = Field(12, [0])
 #
