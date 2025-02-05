@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fb4f6f6-6668-4989-bef7-1c8574339e68" name="Changes" comment="added ship class&#10;added game-loop and turn methods">
+    <list default="true" id="3fb4f6f6-6668-4989-bef7-1c8574339e68" name="Changes" comment="added colorful display">
+      <change afterPath="$PROJECT_DIR$/input_turner.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/random_turner.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/turner.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/battleship_game.py" beforeDir="false" afterPath="$PROJECT_DIR$/battleship_game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,18 +27,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "IIdelightedII"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;IIdelightedII&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/IIdelightedII/battleship-game.git",
-    "accountId": "3435a72f-cd9b-43e0-ad25-c243c6446d01"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/IIdelightedII/battleship-game.git&quot;,
+    &quot;accountId&quot;: &quot;3435a72f-cd9b-43e0-ad25-c243c6446d01&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -55,7 +57,7 @@
   "keyToString": {
     "Python.battleship_game.executor": "Run",
     "Python.constants.executor": "Run",
-    "Python.main.executor": "Run",
+    "Python.main.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master"
   }
@@ -121,7 +123,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738587842367</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="added colorful display">
+      <option name="closed" value="true" />
+      <created>1738590456082</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1738590456082</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -138,6 +148,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="implemented multi-deck ships placement" />
     <MESSAGE value="added ship class&#10;added game-loop and turn methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="added ship class&#10;added game-loop and turn methods" />
+    <MESSAGE value="added colorful display" />
+    <option name="LAST_COMMIT_MESSAGE" value="added colorful display" />
   </component>
 </project>
