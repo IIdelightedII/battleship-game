@@ -22,15 +22,15 @@ class Turner:
                 self.place_buffer_zone(self.field, ship, constants.EXTRA_BUFFER_ZONE)
 
                 self.place_ship(self.field, ship, constants.FULLY_DESTROYED_SHIP)
-            print("-" * 20)
-            return True  # return [был ли выстрел], [попал ли в корабль], [координата x], [координата y]
+            # print("-" * 20)
+            return True, True  # return [был ли выстрел], [попал ли в корабль]
         elif self.field.grid[y][x] == constants.EMPTY or self.field.grid[y][x] == constants.BUFFER_ZONE:
             self.field.grid[y][x] = constants.MISS
             # print(f"{user} промахнулся, координаты: {x + 1}, {y + 1}")
             # print("-" * 20)
-            return True  # return [был ли выстрел], [попал ли в корабль]
+            return True, False  # return [был ли выстрел], [попал ли в корабль]
         else:
-            return False
+            return False, False
 
     def place_buffer_zone(self, field: Field, ship: Ship, symbol: str) -> None:
 

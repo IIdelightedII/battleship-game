@@ -8,11 +8,15 @@ class InputTurner(Turner):
     def make_turn(self):
         while True:
             x, y = self.__player_input()
-            if not self._turn(x, y):
+            result = self._turn(x, y)
+            if not result[0]:
                 print(f"Кажется Вы не туда стреляете, координаты: {x + 1}, {y + 1}")
                 print("-" * 20)
                 continue
-            break
+            if result[1]:
+                return True
+            elif not result[1]:
+                return False
 
 
     def __player_input(self) -> tuple:

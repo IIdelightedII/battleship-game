@@ -4,13 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fb4f6f6-6668-4989-bef7-1c8574339e68" name="Changes" comment="added colorful display">
-      <change afterPath="$PROJECT_DIR$/input_turner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/random_turner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/turner.py" afterDir="false" />
+    <list default="true" id="3fb4f6f6-6668-4989-bef7-1c8574339e68" name="Changes" comment="added new turner class for using dependency injection">
+      <change afterPath="$PROJECT_DIR$/finishing_turner.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/battleship_game.py" beforeDir="false" afterPath="$PROJECT_DIR$/battleship_game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/field.py" beforeDir="false" afterPath="$PROJECT_DIR$/field.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/input_turner.py" beforeDir="false" afterPath="$PROJECT_DIR$/input_turner.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/random_turner.py" beforeDir="false" afterPath="$PROJECT_DIR$/random_turner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/turner.py" beforeDir="false" afterPath="$PROJECT_DIR$/turner.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,15 +56,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.battleship_game.executor": "Run",
-    "Python.constants.executor": "Run",
-    "Python.main.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.battleship_game.executor&quot;: &quot;Run&quot;,
+    &quot;Python.constants.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Maks\PycharmProjects\battleship-game" />
@@ -131,7 +134,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738590456082</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added new turner class for using dependency injection">
+      <option name="closed" value="true" />
+      <created>1738759841654</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1738759841654</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -149,6 +160,18 @@
     <MESSAGE value="implemented multi-deck ships placement" />
     <MESSAGE value="added ship class&#10;added game-loop and turn methods" />
     <MESSAGE value="added colorful display" />
-    <option name="LAST_COMMIT_MESSAGE" value="added colorful display" />
+    <MESSAGE value="added new turner class for using dependency injection" />
+    <option name="LAST_COMMIT_MESSAGE" value="added new turner class for using dependency injection" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>21</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

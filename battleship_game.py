@@ -1,3 +1,5 @@
+from dataclasses import field
+
 from field import Field
 import constants
 from utility import clamp
@@ -68,7 +70,7 @@ class BattleshipGame:
         if not (0 <= ship.x + ship.x_indent * ship.len < self.size and 0 <= ship.y + ship.y_indent * ship.len < self.size):
             return False
         for k in range(ship.len):
-            if (field.grid[ship.y + ship.y_indent * k][ship.x + ship.x_indent * k] == constants.SHIP or
+            if (field.grid[ship.y + ship.y_indent * k][ship.x + ship.x_indent * k].isdigit() or
                 field.grid[ship.y + ship.y_indent * k][ship.x + ship.x_indent * k] == constants.BUFFER_ZONE):
                 return False
         return True
@@ -91,28 +93,42 @@ class BattleshipGame:
             field.grid[ship.y + ship.y_indent * k][ship.x + ship.x_indent * k] = str(symbol)
 
 
-    def play(self):
+    def play(self, ship_vision: bool = False):
         self.place_ships_randomly(self.player1_field)
         self.place_ships_randomly(self.player2_field)
-        while True:
-            print("\nВаша расстановка кораблей:")
-            self.player1_field.display()
-            print("Расстановка кораблей компьютера:")
-            self.player2_field.display()
-            print("ход игрока:")
+        hp1 = 0
+        hp2 = 0
+        for i in range(len(self.player1_field.ship_types)):
+            hp1 += self.player1_field.ship_types[i] * (i + 1)
+        for i in range(len(self.player2_field.ship_types)):
+            hp2 += self.player2_field.ship_types[i] * (i + 1)
 
-            self.player1_turner.make_turn()
-            if self.player2_field.ship_count == 0:
-                print("Все корабли компьютера подбиты, игрок выиграл")
+        while True:
+
+            print("\nрасстановка кораблей 1 игрока:")
+            # self.player1_field.display(ship_vision)
+            print("расстановка кораблей 2 игрока:")
+            self.player2_field.display(ship_vision)
+            print("ход 1 игрока:")
+            print(f"{hp1 = }")
+            print(f"{hp2 = }")
+            if self.player1_turner.make_turn():
+                hp2 -= 1
+            if hp2 == 0:
+                print("Все корабли 2 игрока подбиты, 1 игрок выиграл")
+
                 break
-            print("Ход компьютера")
-            self.player2_turner.make_turn()
-            if self.player1_field.ship_count == 0:
-                print("Все корабли игрока подбиты, компьютер выиграл")
+            print("Ход 2 игрока:")
+            if self.player2_turner.make_turn():
+                hp1 -= 1
+            if hp1 == 0:
+                print("Все корабли 1 игрока подбиты, 2 игрок выиграл")
                 break
-        print("Ваша расстановка кораблей:")
+
+
+        print("расстановка кораблей 1 игрока:")
         self.player1_field.display(True)
-        print("Расстановка кораблей компьютера:")
+        print("Расстановка кораблей 2 игрока:")
         self.player2_field.display(True)
 
 
@@ -174,4 +190,4 @@ class BattleshipGame:
     #         grid[ship.y + ship.y_indent * k][ship.x + ship.x_indent * k] += 1 * num_of_ships
 
 
-
+#  todo

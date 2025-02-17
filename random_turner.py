@@ -10,5 +10,9 @@ class RandomTurner(Turner):
         while True:
             x = random.randint(0, self.field.size - 1)
             y = random.randint(0, self.field.size - 1)
-            if self._turn(x, y):
-                break
+            result = self._turn(x, y)
+            if result[0]:
+                if result[1]:
+                    return True
+                elif not result[1]:
+                    return False
