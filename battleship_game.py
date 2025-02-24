@@ -190,4 +190,4 @@ class BattleshipGame:
     #         grid[ship.y + ship.y_indent * k][ship.x + ship.x_indent * k] += 1 * num_of_ships
 
 
-#  todo
+

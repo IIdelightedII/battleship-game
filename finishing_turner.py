@@ -17,7 +17,7 @@ class FinishingTurner(Turner):
 
     def make_turn(self):
         if self.hunt_mode:
-            return self.finding_ship()
+            return self.finishing_ship()
         else:
             result, x, y = self.random_turn()
             if result[1]:
@@ -40,7 +40,7 @@ class FinishingTurner(Turner):
             if result[0]:
                 return result, x, y
 
-    def finding_ship(self):
+    def finishing_ship(self):
         if self.current_direction:
 
             x = self.last_hit[0] + self.current_direction[0]
