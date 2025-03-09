@@ -7,8 +7,10 @@ from ship import Ship
 import random
 from turner import Turner
 
+
 class BattleshipGame:
-    def __init__(self, size: int, ship_types: list, player1_field: Field, player2_field: Field, player1_turner: Turner, player2_turner: Turner):
+    def __init__(self, size: int, ship_types: list, player1_field: Field, player2_field: Field, player1_turner: Turner,
+                 player2_turner: Turner):
         self.size = size
         self.ship_types = ship_types
         self.player1_field = player1_field
@@ -42,12 +44,6 @@ class BattleshipGame:
 
         return field
 
-
-
-    # Это функция проверки расстановки кораблей, она уже полностью написана
-
-
-
     def generate_ship(self, ship_len: int) -> Ship:
         direction = random.choice(["left", "right", "down", "up"])
         x, y = (random.randint(0, self.size - 1), random.randint(0, self.size - 1))
@@ -65,129 +61,55 @@ class BattleshipGame:
             y_indent = -1
         return Ship(x, y, x_indent, y_indent, ship_len)
 
-
     def is_valid_ship_placement(self, field: Field, ship: Ship) -> bool:
-        if not (0 <= ship.x + ship.x_indent * ship.len < self.size and 0 <= ship.y + ship.y_indent * ship.len < self.size):
+        if not (
+                0 <= ship.x + ship.x_indent * ship.len < self.size and 0 <= ship.y + ship.y_indent * ship.len < self.size):
             return False
         for k in range(ship.len):
             if (field.grid[ship.y + ship.y_indent * k][ship.x + ship.x_indent * k].isdigit() or
-                field.grid[ship.y + ship.y_indent * k][ship.x + ship.x_indent * k] == constants.BUFFER_ZONE):
+                    field.grid[ship.y + ship.y_indent * k][ship.x + ship.x_indent * k] == constants.BUFFER_ZONE):
                 return False
         return True
 
-    def place_buffer_zone(self, field:  Field, ship: Ship, symbol: str) -> None:
+    def place_buffer_zone(self, field: Field, ship: Ship, symbol: str) -> None:
 
         point1 = (clamp(ship.x - 1 * (ship.x_indent + ship.y_indent), 0, self.size - 1),
                   clamp((ship.y - 1 * (ship.x_indent + ship.y_indent)), 0, self.size - 1))
-        point2 = (clamp((ship.x + ship.x_indent * ship.len + abs(ship.y_indent) * (ship.x_indent + ship.y_indent)), 0, self.size - 1),
-                  clamp((ship.y + ship.y_indent * ship.len + abs(ship.x_indent) * (ship.x_indent + ship.y_indent)), 0, self.size - 1))
+        point2 = (clamp((ship.x + ship.x_indent * ship.len + abs(ship.y_indent) * (ship.x_indent + ship.y_indent)), 0,
+                        self.size - 1),
+                  clamp((ship.y + ship.y_indent * ship.len + abs(ship.x_indent) * (ship.x_indent + ship.y_indent)), 0,
+                        self.size - 1))
 
         for x in range(min(point2[0], point1[0]), max(point2[0], point1[0]) + 1):
             for y in range(min(point2[1], point1[1]), max(point2[1], point1[1]) + 1):
                 field.grid[y][x] = symbol
 
-
-
     def place_ship(self, field: Field, ship: Ship, symbol: str | int) -> None:
         for k in range(ship.len):
             field.grid[ship.y + ship.y_indent * k][ship.x + ship.x_indent * k] = str(symbol)
 
-
     def play(self, ship_vision: bool = False):
         self.place_ships_randomly(self.player1_field)
         self.place_ships_randomly(self.player2_field)
-        hp1 = 0
-        hp2 = 0
-        for i in range(len(self.player1_field.ship_types)):
-            hp1 += self.player1_field.ship_types[i] * (i + 1)
-        for i in range(len(self.player2_field.ship_types)):
-            hp2 += self.player2_field.ship_types[i] * (i + 1)
-
+        counter = 0
         while True:
-
             print("\nрасстановка кораблей 1 игрока:")
-            # self.player1_field.display(ship_vision)
+            self.player1_field.display(True)
             print("расстановка кораблей 2 игрока:")
             self.player2_field.display(ship_vision)
             print("ход 1 игрока:")
-            print(f"{hp1 = }")
-            print(f"{hp2 = }")
-            if self.player1_turner.make_turn():
-                hp2 -= 1
-            if hp2 == 0:
-                print("Все корабли 2 игрока подбиты, 1 игрок выиграл")
 
+            self.player1_turner.make_turn()
+            if not self.player2_field.ships:
+                print("Все корабли 2 игрока подбиты, 1 игрок выиграл")
                 break
             print("Ход 2 игрока:")
-            if self.player2_turner.make_turn():
-                hp1 -= 1
-            if hp1 == 0:
+            self.player2_turner.make_turn()
+            if not self.player1_field.ships:
                 print("Все корабли 1 игрока подбиты, 2 игрок выиграл")
                 break
-
 
         print("расстановка кораблей 1 игрока:")
         self.player1_field.display(True)
         print("Расстановка кораблей 2 игрока:")
         self.player2_field.display(True)
-
-
-
-
-    #
-    #
-    # def finish_off_ship(self, x: int, y: int, x_indent, y_indent, counter: int):
-    #     # print(x_indent, y_indent)
-    #     if x_indent == 0 and y_indent == 0:
-    #         x_indent, y_indent = random.choice([(0, 1), (0, -1), (1, 0), (-1, 0)])
-    #         if self.__turn(self.player1_field, x + x_indent, y + y_indent, "Компьютер")[1]:
-    #             if self.player1_field.grid[y][x] == constants.FULLY_DESTROYED_SHIP:
-    #                 return True, x_indent, y_indent, counter
-    #             counter += 1
-    #             return False, x_indent, y_indent, counter
-    #         else:
-    #             return False, 0, 0, 1
-    #     else:
-    #         if self.__turn(self.player1_field, x + x_indent * counter, y + x_indent * counter, "Компьютер")[1]:
-    #             if self.player1_field.grid[y][x] == constants.FULLY_DESTROYED_SHIP:
-    #                 return True
-    #             counter += 1
-    #             return False, x_indent, y_indent, counter
-    #         else:
-    #             if y_indent == 0:
-    #                 x_indent = -1
-    #             elif x_indent == 0:
-    #                 y_indent = -1
-    #             counter = 1
-    #             return False, x_indent, y_indent, counter
-    #
-    #
-    # def manual_shoot(self, x: int, y: int, field):
-    #     if not self.__turn(field, x, y, "")[0]:
-    #         print(f"Кажется Вы не туда стреляете, координаты: {x + 1}, {y + 1}")
-    #         print("-" * 20)
-    #         return False
-    #     return True
-
-    # def first_shoot(self):
-    #     calculating_field = []
-    #     for i in range(self.size):
-    #         line = []
-    #         for j in range(self.size):
-    #             line.append("0")
-    #         calculating_field.append(line)
-    #     for i in range(self.size):
-    #         for j in range(self.size):
-    #             if not self.player_field.grid[i][j] == constants.EMPTY or not self.player_field.grid[i][j] == constants.BUFFER_ZONE:
-    #                 calculating_field[i][j] = "+"
-    #
-    #     for i in range(self.size):
-    #         for j in range(self.size):
-    #             if self.is_valid_ship_placement(calculating_field, )
-    #
-    # def p(self, grid: list[list[int]], ship: Ship, num_of_ships) -> None:
-    #     for k in range(ship.len):
-    #         grid[ship.y + ship.y_indent * k][ship.x + ship.x_indent * k] += 1 * num_of_ships
-
-
-

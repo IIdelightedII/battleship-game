@@ -12,19 +12,18 @@ from finishing_turner import FinishingTurner
 from probability_turner import ProbabilityTurner
 from turner import Turner
 
-size = 5
-ship_types = [0, 2, 1]
-field1 = Field(size, ship_types)
-field2 = Field(size, ship_types)
-field2.display()
-turner1 = FinishingTurner(field2)
-turner2 = ProbabilityTurner(field1)
-field1.grid[3][3] = constants.SHIP
-turner2.searching_ship(3)
+size = 100
+ship_types = [0, 4, 3, 2, 1]
+field1 = Field(size, ship_types.copy())
+field2 = Field(size, ship_types.copy())
+turner1 = ProbabilityTurner(field2)
+turner2 = InputTurner(field1)
 
-print(turner2.probability_grid)
-# game = BattleshipGame(size, ship_types, field1, field2, turner1, turner2)
-# game.play(True)
+game = BattleshipGame(size, ship_types, field1, field2, turner1, turner2)
+turner1.make_field_map()
+print(turner1.field_map)
+print(field2.ship_types)
+game.play()
 
 
 

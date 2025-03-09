@@ -1,12 +1,14 @@
+from dataclasses import field
+
 from field import Field
 import constants
 from utility import clamp
 from ship import Ship
 
+
 class Turner:
     def __init__(self, field: Field):
         self.field = field
-
 
     def _turn(self, x: int, y: int):
         if self.field.grid[y][x].isdigit():
@@ -19,6 +21,8 @@ class Turner:
             if ship.hp == 0:
                 # print(f"{user} уничтожил корабль!")
                 self.field.ship_count -= 1
+                self.field.ship_types[ship.len - 1] -= 1
+                del self.field.ships[ship_number]
                 self.place_buffer_zone(self.field, ship, constants.EXTRA_BUFFER_ZONE)
 
                 self.place_ship(self.field, ship, constants.FULLY_DESTROYED_SHIP)
@@ -31,6 +35,14 @@ class Turner:
             return True, False  # return [был ли выстрел], [попал ли в корабль]
         else:
             return False, False
+
+    def is_inside_field(self, x, y):
+        return 0 <= x < self.field.size and 0 <= y < self.field.size
+
+    def is_valid_turn(self, x, y):
+        return not (self.field.grid[y][x] == constants.MISS or self.field.grid[y][x] == constants.DESTROYED_SHIP or
+                    self.field.grid[y][x] == constants.FULLY_DESTROYED_SHIP or
+                    self.field.grid[y][x] == constants.EXTRA_BUFFER_ZONE)
 
     def place_buffer_zone(self, field: Field, ship: Ship, symbol: str) -> None:
 
@@ -49,8 +61,5 @@ class Turner:
         for k in range(ship.len):
             field.grid[ship.y + ship.y_indent * k][ship.x + ship.x_indent * k] = str(symbol)
 
-
-    def make_turn(self):
+    def make_turn(self) -> None:
         pass
-
-
