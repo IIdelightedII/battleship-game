@@ -139,5 +139,4 @@ class ProbabilityTurner(FinishingTurner):
         for i in range(len(self.probability_grid[0])):
             for j in range(len(self.probability_grid[0])):
                 self.probability_grid[i][j] = 0
-        self.display_probability_grid()
         # print("-----------------------------------")

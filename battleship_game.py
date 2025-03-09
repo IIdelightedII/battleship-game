@@ -94,7 +94,7 @@ class BattleshipGame:
         counter = 0
         while True:
             print("\nрасстановка кораблей 1 игрока:")
-            self.player1_field.display(True)
+            self.player1_field.display(ship_vision)
             print("расстановка кораблей 2 игрока:")
             self.player2_field.display(ship_vision)
             print("ход 1 игрока:")
