@@ -1,4 +1,5 @@
 from dataclasses import field
+from itertools import count
 
 from field import Field
 import constants
@@ -9,32 +10,48 @@ from turner import Turner
 
 
 class BattleshipGame:
-    def __init__(self, size: int, ship_types: list, player1_field: Field, player2_field: Field, player1_turner: Turner,
+    def __init__(self, size: int, player1_field: Field, player2_field: Field, player1_turner: Turner,
                  player2_turner: Turner):
         self.size = size
-        self.ship_types = ship_types
         self.player1_field = player1_field
         self.player2_field = player2_field
         self.player1_turner = player1_turner
         self.player2_turner = player2_turner
 
+
+
+    def multiple_place(self, field: Field):
+        field_with_ships = None
+        counter = 0
+        while not field_with_ships:
+            counter += 1
+            print(f"попытка разместить корабли №{counter}")
+            field.reset_grid()
+            field_with_ships = self.place_ships_randomly(field)
+        print("Корабли успешно размещены")
+        return field_with_ships
+
     # Это функция расстановки кораблей, она уже полностью написана
     def place_ships_randomly(self, field: Field):
         ship_number = 0
-        for ship_len in range(len(self.ship_types)):
+        counter = 0
+        for ship_len in range(len(field.ship_types)):
 
             # print(f"{self.ships[ship_len] = }")
 
-            for _ in range(self.ship_types[ship_len]):
+            for _ in range(field.ship_types[ship_len]):
                 ship_number += 1
                 placed = False
                 # print(f"{_ + 1} {ship_len + 1}-палубных кораблей")
                 while not placed:
                     # ship_len += 1
                     ship = self.generate_ship(ship_len + 1)
-
+                    counter += 1
+                    if counter > 100:
+                        return
                     if not self.is_valid_ship_placement(field, ship):
                         continue
+                    counter = 0
                     field.ships[str(ship_number)] = ship
                     self.place_buffer_zone(field, ship, constants.BUFFER_ZONE)
 
@@ -89,8 +106,9 @@ class BattleshipGame:
             field.grid[ship.y + ship.y_indent * k][ship.x + ship.x_indent * k] = str(symbol)
 
     def play(self, ship_vision: bool = False):
-        self.place_ships_randomly(self.player1_field)
-        self.place_ships_randomly(self.player2_field)
+        print("\n" * 50)
+        self.multiple_place(self.player1_field)
+        self.multiple_place(self.player2_field)
         counter = 0
         while True:
             print("\nрасстановка кораблей 1 игрока:")
@@ -113,3 +131,4 @@ class BattleshipGame:
         self.player1_field.display(True)
         print("Расстановка кораблей 2 игрока:")
         self.player2_field.display(True)
+        return not not self.player2_field.ships

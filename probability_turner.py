@@ -29,6 +29,7 @@ class ProbabilityTurner(FinishingTurner):
             self.null_probability_grid()
             max_ship_len = self.get_max_ship_len()
             # print(f"{max_ship_len = }")
+
             return self.searching_ship(max_ship_len)
 
     def searching_ship(self, max_ship_len):

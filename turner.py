@@ -20,7 +20,6 @@ class Turner:
 
             if ship.hp == 0:
                 # print(f"{user} уничтожил корабль!")
-                self.field.ship_count -= 1
                 self.field.ship_types[ship.len - 1] -= 1
                 del self.field.ships[ship_number]
                 self.place_buffer_zone(self.field, ship, constants.EXTRA_BUFFER_ZONE)

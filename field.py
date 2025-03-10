@@ -10,15 +10,17 @@ class Field:
     def __init__(self, size: int, ship_types: list): # значения ships раньше были в int
         self.size = size
         self.ship_types = ship_types
-        self.ship_count = sum(ship_types)
         self.ships = {}
         self.grid = []
-        for i in range(size):
+        self.reset_grid()
+
+    def reset_grid(self):
+        for i in range(self.size):
             line = []
-            for j in range(size):
+            for j in range(self.size):
                 line.append(constants.EMPTY)
             self.grid.append(line)
-
+        self.ships = {}
 
     def display(self, show_ships: bool = False, show_numbers: bool = False) -> None:
         indent = len(str(self.size))

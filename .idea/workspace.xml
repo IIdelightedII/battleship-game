@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fb4f6f6-6668-4989-bef7-1c8574339e68" name="Changes" comment="finished finishing and probability turner">
+    <list default="true" id="3fb4f6f6-6668-4989-bef7-1c8574339e68" name="Changes" comment="fixed bug with showing ships at 1st field">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/battleship_game.py" beforeDir="false" afterPath="$PROJECT_DIR$/battleship_game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finishing_turner.py" beforeDir="false" afterPath="$PROJECT_DIR$/finishing_turner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/field.py" beforeDir="false" afterPath="$PROJECT_DIR$/field.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/probability_turner.py" beforeDir="false" afterPath="$PROJECT_DIR$/probability_turner.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/turner.py" beforeDir="false" afterPath="$PROJECT_DIR$/turner.py" afterDir="false" />
@@ -163,7 +163,23 @@
       <option name="project" value="LOCAL" />
       <updated>1741504461645</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="fixed bug with showing ships at 1st field">
+      <option name="closed" value="true" />
+      <created>1741504856974</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1741504856974</updated>
+    </task>
+    <task id="LOCAL-00009" summary="fixed bug with showing ships at 1st field">
+      <option name="closed" value="true" />
+      <created>1741504861135</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1741504861135</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -185,7 +201,8 @@
     <MESSAGE value="added finishing turner, but still needs bugfix" />
     <MESSAGE value="added probability_turner" />
     <MESSAGE value="finished finishing and probability turner" />
-    <option name="LAST_COMMIT_MESSAGE" value="finished finishing and probability turner" />
+    <MESSAGE value="fixed bug with showing ships at 1st field" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed bug with showing ships at 1st field" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
