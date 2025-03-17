@@ -71,36 +71,66 @@ def choose_max_ship_len():
             print("вы должны ввести целое число")
     return max_ship_len
 
-def choose_ship_types(max_ship_len):
+def choose_ship_types(max_ship_len, field_size):
     ship_types = []
-    for i in range(max_ship_len):
+    min_field_area = field_size ** 2
+    max_field_area = field_size ** 2
+    ship_len = 1
+    min_ship_area = ship_len * 2 + 2
+    max_ship_area = ship_len * 3 + 6
+    for i in range(0, max_ship_len):
+        min_possible_ships = min_field_area // max_ship_area
+        max_possible_ships = max_field_area // min_ship_area
+        if min_possible_ships < 0:
+            min_possible_ships = 0
+        if max_possible_ships < 0:
+            print("Похоже, невозможно поставить больше кораблей")
+            break
         while True:
             try:
-                amount = int(input(f"сколько будет {i + 1}-палубных кораблей\n(может быть даже 0 кораблей): "))
-                if amount >= 0:
-                    ship_types.append(amount)
-                    break
-                print("вы должны ввести положительное число")
-
+                amount = int(input(f"сколько будет {i + 1}-палубных кораблей?\nрекомендуется от {min_possible_ships} до {max_possible_ships}.(может быть даже 0 кораблей): "))
+                if amount < 0:
+                    print("вы должны ввести положительное число")
+                    continue
             except ValueError:
                 print("вы должны ввести целое число")
+                continue
+            ship_types.append(amount)
+            ships_amount = ship_types[i]
+            ship_len = i + 2
+            min_ship_area = ship_len * 2 + 2
+            max_ship_area = ship_len * 3 + 6
+            min_field_area -= ships_amount * max_ship_area
+            max_field_area -= ships_amount * min_ship_area
+            break
+
+
+
     return ship_types
 
 
 def main():
-    size = choose_size()
-    max_ship_len = choose_max_ship_len()
+    while True:
+        size = choose_size()
+        max_ship_len = choose_max_ship_len()
 
-    ship_types = choose_ship_types(max_ship_len)
+        ship_types = choose_ship_types(max_ship_len, size)
+        print(f"{ship_types = }")
+        field1 = Field(size, ship_types.copy())
+        field2 = Field(size, ship_types.copy())
+        turner1, turner2 = choose_game_type(field1, field2)
 
-    field1 = Field(size, ship_types.copy())
-    field2 = Field(size, ship_types.copy())
-    turner1, turner2 = choose_game_type(field1, field2)
-
-    game = BattleshipGame(size, field1, field2, turner1, turner2)
-    print("Если не загружается в течении нескольких секунд, то скорее всего нужно либо увеличить поле, либо уменьшить количество кораблей")
-    game.play()
-
+        game = BattleshipGame(size, field1, field2, turner1, turner2)
+        print(ship_types.copy())
+        try:
+            game.multiple_place(field1)
+            game.multiple_place(field2)
+        except ValueError:
+            print("Невозможно расставить корабли, попробуйте увеличить поле, либо уменьшить количество кораблей")
+            continue
+        print("Корабли успешно размещены")
+        game.play()
+        break
 
 if __name__ == '__main__':
     main()
