@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fb4f6f6-6668-4989-bef7-1c8574339e68" name="Changes" comment="added recommendations for placement, user now can't freeze the program">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    <list default="true" id="3fb4f6f6-6668-4989-bef7-1c8574339e68" name="Changes" comment="fixed not starting program">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,7 +191,23 @@
       <option name="project" value="LOCAL" />
       <updated>1742219167628</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="added README.">
+      <option name="closed" value="true" />
+      <created>1742814825984</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1742814825984</updated>
+    </task>
+    <task id="LOCAL-00013" summary="fixed not starting program">
+      <option name="closed" value="true" />
+      <created>1742814856303</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1742814856303</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -216,7 +231,9 @@
     <MESSAGE value="finished finishing and probability turner" />
     <MESSAGE value="fixed bug with showing ships at 1st field" />
     <MESSAGE value="added recommendations for placement, user now can't freeze the program" />
-    <option name="LAST_COMMIT_MESSAGE" value="added recommendations for placement, user now can't freeze the program" />
+    <MESSAGE value="added README." />
+    <MESSAGE value="fixed not starting program" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed not starting program" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
